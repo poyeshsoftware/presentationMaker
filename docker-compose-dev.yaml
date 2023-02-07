@@ -1,0 +1,93 @@
+version: "3"
+
+networks:
+  project-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.225.8.0/24
+
+services:
+
+  project-apache-php-service:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: project-apache-php-service
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "2"
+          memory: 1024M
+      restart_policy:
+        condition: on-failure
+    environment:
+      # NOTE: To enable debugging with IntelliJ/PHPStorm and Xdebug update the PHP_IDE_CONFIG environment variable
+      # serverName property according to your server configuration (see: Settings > Languages & Frameworks > PHP >
+      # Servers) and set the XDEBUG_CONFIG environment variable remote_host property to your IP address in the
+      # local network.
+      PHP_IDE_CONFIG: serverName=project_Docker
+    networks:
+      - project-network
+    ports:
+      - "21498:80"
+    volumes:
+      - ./docker/develop/files/apache/localhost.cert.pem:/etc/apache2/certs/localhost.cert.pem
+      - ./docker/develop/files/apache/localhost.chain.cert.pem:/etc/apache2/certs/localhost.chain.cert.pem
+      - ./docker/develop/files/apache/localhost.key.pem:/etc/apache2/certs/localhost.key.pem
+      - ./:/var/app
+
+  db:
+    container_name: project-mysql-service
+    image: mysql:8.0
+    cap_add:
+      - SYS_NICE  # CAP_SYS_NICE
+    ports:
+      - "21499:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: project
+      MYSQL_USER: project_user
+      MYSQL_PASSWORD: project_pass
+      MYSQL_ROOT_PASSWORD: project_pass_root
+    volumes:
+      - ./docker-compose/mysql/dump:/docker-entrypoint-initdb.d
+      - ./docker-compose/mysql/conf:/etc/mysql/conf.d
+      - ./docker-compose/mysql/mysql:/var/lib/mysql
+    networks:
+      - project-network
+
+  project-mysql-test-service:
+    container_name: project-mysql-test-service
+    image: mysql:8.0
+    cap_add:
+      - SYS_NICE  # CAP_SYS_NICE
+    ports:
+      - "21500:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: project
+      MYSQL_USER: project_user
+      MYSQL_PASSWORD: project_pass
+      MYSQL_ROOT_PASSWORD: project_pass_root
+    volumes:
+      - ./docker-compose/mysql-test/dump:/docker-entrypoint-initdb.d
+      - ./docker-compose/mysql-test/conf:/etc/mysql/conf.d
+      - ./docker-compose/mysql-test/mysql:/var/lib/mysql
+    networks:
+      - project-network
+
+  phpmyadmin:
+    container_name: project-phpmyadmin-service
+    image: phpmyadmin/phpmyadmin
+    links:
+      - db:db
+    ports:
+      - "21501:80"
+    networks:
+      - project-network
+    environment:
+      MYSQL_USER: project_user
+      MYSQL_PASSWORD: project_pass
+      MYSQL_ROOT_PASSWORD: project_pass_root

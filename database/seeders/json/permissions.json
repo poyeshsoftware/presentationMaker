@@ -1,0 +1,66 @@
+[
+    {
+        "name": "Can Manage Users",
+        "description": "This allows user to manage users."
+    },
+    {
+        "name": "Can Create Users",
+        "description": "This allows user to add new user."
+    },
+    {
+        "name": "Can Update Users",
+        "description": "This allows user to edit user."
+    },
+    {
+        "name": "Can Delete Users",
+        "description": "This allows user to delete user."
+    },
+    {
+        "name": "Can Manage Roles",
+        "description": "This allows user to manage roles."
+    },
+    {
+        "name": "Can Create Roles",
+        "description": "This allows user to add role."
+    },
+    {
+        "name": "Can Update Roles",
+        "description": "This allows user to edit role."
+    },
+    {
+        "name": "Can Delete Roles",
+        "description": "This allows user to delete role."
+    },
+    {
+        "name": "Can Manage Permissions",
+        "description": "This allows user to manage permissions."
+    },
+    {
+        "name": "Can Create Permissions",
+        "description": "This allows user to add role."
+    },
+    {
+        "name": "Can Update Permissions",
+        "description": "This allows user to edit role."
+    },
+    {
+        "name": "Can Delete Permissions",
+        "description": "This allows user to delete role."
+    },
+    {
+        "name": "Can Manage Projects",
+        "description": "This allows user to manage projects."
+    },
+    {
+        "name": "Can Create Projects",
+        "description": "This allows user to add projects."
+    },
+    {
+        "name": "Can Update Projects",
+        "description": "This allows user to edit projects."
+    },
+    {
+        "name": "Can Delete Projects",
+        "description": "This allows user to delete projects."
+    }
+]

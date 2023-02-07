@@ -1,0 +1,48 @@
+[
+    {
+        "name": "Super Administrator",
+        "description": "Users who have admin roles has all the permission access and manage the data.",
+        "level": "10",
+        "permissions": "*"
+    },
+    {
+        "name": "Administrator",
+        "description": "Users who can create projects and manage sub users.",
+        "level": "9",
+        "restrictions": [
+            "Can Manage Roles",
+            "Can Create Roles",
+            "Can Update Roles",
+            "Can Delete Roles"
+        ]
+    },
+    {
+        "name": "Second Level Administrator",
+        "description": "User has all access and rights as Administrator but isn't project root user.",
+        "level": "8",
+        "restrictions": [
+            "Can Manage Roles",
+            "Can Create Roles",
+            "Can Update Roles",
+            "Can Delete Roles"
+        ]
+    },
+    {
+        "name": "Editor",
+        "description": "Users who can create projects and manage it's own content or permitted content.",
+        "level": "6",
+        "permissions": [
+            "Can Manage Projects",
+            "Can Create Projects",
+            "Can Update Projects",
+            "Can Delete Projects"
+        ]
+    },
+    {
+        "name": "Limited",
+        "description": "User who can only view or change permitted content.",
+        "level": "3",
+        "permissions": [
+        ]
+    }
+]
